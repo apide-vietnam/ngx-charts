@@ -8232,6 +8232,8 @@ var CircleSeriesComponent = /** @class */ (function () {
         var _this = this;
         var indexActiveDataPoint = this.data.series.findIndex(function (d) {
             var label = d.name;
+            console.log(d, 'd');
+            console.log(_this.visibleValue, 'visibleValue');
             if (_this.visibleValue == true) {
                 return true;
             }
