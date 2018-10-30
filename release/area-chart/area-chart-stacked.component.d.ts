@@ -5,6 +5,7 @@ import { BaseChartComponent } from '../common/base-chart.component';
 export declare class AreaChartStackedComponent extends BaseChartComponent {
     legend: boolean;
     legendTitle: string;
+    legendPosition: string;
     xAxis: any;
     yAxis: any;
     showXAxisLabel: any;
@@ -63,8 +64,6 @@ export declare class AreaChartStackedComponent extends BaseChartComponent {
     getSeriesDomain(): any[];
     getXScale(domain: any, width: any): any;
     getYScale(domain: any, height: any): any;
-    getScaleType(values: any): string;
-    isDate(value: any): boolean;
     updateDomain(domain: any): void;
     updateHoveredVertical(item: any): void;
     hideCircles(): void;
@@ -76,6 +75,7 @@ export declare class AreaChartStackedComponent extends BaseChartComponent {
         colors: any;
         domain: any[];
         title: any;
+        position: string;
     };
     updateYAxisWidth({width}: {
         width: any;

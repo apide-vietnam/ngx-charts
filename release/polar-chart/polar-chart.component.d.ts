@@ -5,6 +5,7 @@ import { BaseChartComponent } from '../common/base-chart.component';
 export declare class PolarChartComponent extends BaseChartComponent {
     legend: boolean;
     legendTitle: string;
+    legendPosition: string;
     xAxis: boolean;
     yAxis: boolean;
     showXAxisLabel: boolean;
@@ -64,7 +65,6 @@ export declare class PolarChartComponent extends BaseChartComponent {
     getSeriesDomain(): any[];
     getXScale(domain: any, width: any): any;
     getYScale(domain: any, height: any): any;
-    getScaleType(values: any): string;
     onClick(data: any, series?: any): void;
     setColors(): void;
     getLegendOptions(): {
@@ -72,11 +72,13 @@ export declare class PolarChartComponent extends BaseChartComponent {
         colors: ColorHelper;
         domain: any;
         title: string;
+        position: string;
     } | {
         scaleType: string;
         colors: any;
         domain: any;
         title: any;
+        position: string;
     };
     updateYAxisWidth({width}: {
         width: any;

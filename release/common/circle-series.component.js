@@ -35,6 +35,9 @@ var CircleSeriesComponent = /** @class */ (function () {
         var _this = this;
         var indexActiveDataPoint = this.data.series.findIndex(function (d) {
             var label = d.name;
+            if (_this.visibleValue == true) {
+                return true;
+            }
             return label && _this.visibleValue && label.toString() === _this.visibleValue.toString() && d.value !== undefined;
         });
         if (indexActiveDataPoint === -1) {

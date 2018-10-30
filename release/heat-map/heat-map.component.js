@@ -22,11 +22,13 @@ import { scaleBand } from 'd3-scale';
 import { BaseChartComponent } from '../common/base-chart.component';
 import { calculateViewDimensions } from '../common/view-dimensions.helper';
 import { ColorHelper } from '../common/color.helper';
+import { getScaleType } from '../common/domain.helper';
 var HeatMapComponent = /** @class */ (function (_super) {
     __extends(HeatMapComponent, _super);
     function HeatMapComponent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.legendTitle = 'Legend';
+        _this.legendPosition = 'right';
         _this.innerPadding = 8;
         _this.tooltipDisabled = false;
         _this.margin = [10, 20, 10, 20];
@@ -41,7 +43,7 @@ var HeatMapComponent = /** @class */ (function (_super) {
         this.xDomain = this.getXDomain();
         this.yDomain = this.getYDomain();
         this.valueDomain = this.getValueDomain();
-        this.scaleType = this.getScaleType(this.valueDomain);
+        this.scaleType = getScaleType(this.valueDomain, false);
         this.dims = calculateViewDimensions({
             width: this.width,
             height: this.height,
@@ -53,7 +55,8 @@ var HeatMapComponent = /** @class */ (function (_super) {
             showXLabel: this.showXAxisLabel,
             showYLabel: this.showYAxisLabel,
             showLegend: this.legend,
-            legendType: this.scaleType
+            legendType: this.scaleType,
+            legendPosition: this.legendPosition
         });
         if (this.scaleType === 'linear') {
             var min = this.min;
@@ -179,18 +182,6 @@ var HeatMapComponent = /** @class */ (function (_super) {
     HeatMapComponent.prototype.onClick = function (data) {
         this.select.emit(data);
     };
-    HeatMapComponent.prototype.getScaleType = function (values) {
-        var num = true;
-        for (var _i = 0, values_1 = values; _i < values_1.length; _i++) {
-            var value = values_1[_i];
-            if (typeof value !== 'number') {
-                num = false;
-            }
-        }
-        if (num)
-            return 'linear';
-        return 'ordinal';
-    };
     HeatMapComponent.prototype.setColors = function () {
         this.colors = new ColorHelper(this.scheme, this.scaleType, this.valueDomain);
     };
@@ -199,7 +190,8 @@ var HeatMapComponent = /** @class */ (function (_super) {
             scaleType: this.scaleType,
             domain: this.valueDomain,
             colors: this.scaleType === 'ordinal' ? this.colors : this.colors.scale,
-            title: this.scaleType === 'ordinal' ? this.legendTitle : undefined
+            title: this.scaleType === 'ordinal' ? this.legendTitle : undefined,
+            position: this.legendPosition
         };
     };
     HeatMapComponent.prototype.updateYAxisWidth = function (_a) {
@@ -220,6 +212,10 @@ var HeatMapComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", String)
     ], HeatMapComponent.prototype, "legendTitle", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], HeatMapComponent.prototype, "legendPosition", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)

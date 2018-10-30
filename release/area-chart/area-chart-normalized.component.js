@@ -24,13 +24,14 @@ import { calculateViewDimensions } from '../common/view-dimensions.helper';
 import { ColorHelper } from '../common/color.helper';
 import { BaseChartComponent } from '../common/base-chart.component';
 import { id } from '../utils/id';
-import { getUniqueXDomainValues } from '../common/domain.helper';
+import { getUniqueXDomainValues, getScaleType } from '../common/domain.helper';
 var AreaChartNormalizedComponent = /** @class */ (function (_super) {
     __extends(AreaChartNormalizedComponent, _super);
     function AreaChartNormalizedComponent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.legend = false;
         _this.legendTitle = 'Legend';
+        _this.legendPosition = 'right';
         _this.showGridLines = true;
         _this.curve = curveLinear;
         _this.activeEntries = [];
@@ -59,7 +60,8 @@ var AreaChartNormalizedComponent = /** @class */ (function (_super) {
             showXLabel: this.showXAxisLabel,
             showYLabel: this.showYAxisLabel,
             showLegend: this.legend,
-            legendType: this.schemeType
+            legendType: this.schemeType,
+            legendPosition: this.legendPosition
         });
         if (this.timeline) {
             this.dims.height -= (this.timelineHeight + this.margin[2] + this.timelinePadding);
@@ -148,7 +150,7 @@ var AreaChartNormalizedComponent = /** @class */ (function (_super) {
     };
     AreaChartNormalizedComponent.prototype.getXDomain = function () {
         var values = getUniqueXDomainValues(this.results);
-        this.scaleType = this.getScaleType(values);
+        this.scaleType = getScaleType(values);
         var domain = [];
         if (this.scaleType === 'time') {
             var min = Math.min.apply(Math, values);
@@ -207,32 +209,6 @@ var AreaChartNormalizedComponent = /** @class */ (function (_super) {
             .domain(domain);
         return this.roundDomains ? scale.nice() : scale;
     };
-    AreaChartNormalizedComponent.prototype.getScaleType = function (values) {
-        var date = true;
-        var num = true;
-        for (var _i = 0, values_1 = values; _i < values_1.length; _i++) {
-            var value = values_1[_i];
-            if (!this.isDate(value)) {
-                date = false;
-            }
-            if (typeof value !== 'number') {
-                num = false;
-            }
-        }
-        if (date) {
-            return 'time';
-        }
-        if (num) {
-            return 'linear';
-        }
-        return 'ordinal';
-    };
-    AreaChartNormalizedComponent.prototype.isDate = function (value) {
-        if (value instanceof Date) {
-            return true;
-        }
-        return false;
-    };
     AreaChartNormalizedComponent.prototype.updateDomain = function (domain) {
         this.filteredDomain = domain;
         this.xDomain = this.filteredDomain;
@@ -270,7 +246,8 @@ var AreaChartNormalizedComponent = /** @class */ (function (_super) {
             scaleType: this.schemeType,
             colors: undefined,
             domain: [],
-            title: undefined
+            title: undefined,
+            position: this.legendPosition
         };
         if (opts.scaleType === 'ordinal') {
             opts.domain = this.seriesDomain;
@@ -327,6 +304,10 @@ var AreaChartNormalizedComponent = /** @class */ (function (_super) {
         Input(),
         __metadata("design:type", String)
     ], AreaChartNormalizedComponent.prototype, "legendTitle", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], AreaChartNormalizedComponent.prototype, "legendPosition", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)
