@@ -114,6 +114,9 @@ export class CircleSeriesComponent implements OnChanges, OnInit {
   getActiveCircle(): {} {
     const indexActiveDataPoint = this.data.series.findIndex((d) => {
       const label = d.name;
+      if (this.visibleValue == true) {
+        return true;
+      }
       return label && this.visibleValue && label.toString() === this.visibleValue.toString() && d.value !== undefined;
     });
 

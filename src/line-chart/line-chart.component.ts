@@ -106,7 +106,7 @@ import { getUniqueXDomainValues, getScaleType } from '../common/domain.helper';
                 [colors]="colors"
                 [data]="series"
                 [scaleType]="scaleType"
-                [visibleValue]="hoveredVertical"
+                [visibleValue]="true"
                 [activeEntries]="activeEntries"
                 [tooltipDisabled]="tooltipDisabled"
                 [tooltipTemplate]="tooltipTemplate"
