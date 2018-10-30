@@ -112,22 +112,22 @@ export class CircleSeriesComponent implements OnChanges, OnInit {
   }
 
   getActiveCircle(): {} {
-    const indexActiveDataPoint = this.data.series.findIndex((d) => {
-      const label = d.name;
-      console.log(d, 'd');
-      console.log(this.visibleValue, 'visibleValue');
-      if (this.visibleValue == true) {
-        return true;
+    if (this.visibleValue == true) {
+      for (let i = 0; i < this.data.series.length; i++) {
+        this.mapDataPointToCircle(this.data.series[i], i);
       }
-      return label && this.visibleValue && label.toString() === this.visibleValue.toString() && d.value !== undefined;
-    });
+    } else {
+      const indexActiveDataPoint = this.data.series.findIndex((d) => {
+        const label = d.name;
+        return label && this.visibleValue && label.toString() === this.visibleValue.toString() && d.value !== undefined;
+      });
 
-    if (indexActiveDataPoint === -1) {
-      // No valid point is 'active/hovered over' at this moment.
-      return undefined;
+      if (indexActiveDataPoint === -1) {
+        // No valid point is 'active/hovered over' at this moment.
+        return undefined;
+      }
+      return this.mapDataPointToCircle(this.data.series[indexActiveDataPoint], indexActiveDataPoint);
     }
-
-    return this.mapDataPointToCircle(this.data.series[indexActiveDataPoint], indexActiveDataPoint);
   }
 
   mapDataPointToCircle(d: any, i: number): any {

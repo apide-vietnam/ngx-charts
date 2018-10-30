@@ -2913,20 +2913,22 @@ var CircleSeriesComponent = /** @class */ (function () {
     };
     CircleSeriesComponent.prototype.getActiveCircle = function () {
         var _this = this;
-        var indexActiveDataPoint = this.data.series.findIndex(function (d) {
-            var label = d.name;
-            console.log(d, 'd');
-            console.log(_this.visibleValue, 'visibleValue');
-            if (_this.visibleValue == true) {
-                return true;
+        if (this.visibleValue == true) {
+            for (var i = 0; i < this.data.series.length; i++) {
+                this.mapDataPointToCircle(this.data.series[i], i);
             }
-            return label && _this.visibleValue && label.toString() === _this.visibleValue.toString() && d.value !== undefined;
-        });
-        if (indexActiveDataPoint === -1) {
-            // No valid point is 'active/hovered over' at this moment.
-            return undefined;
         }
-        return this.mapDataPointToCircle(this.data.series[indexActiveDataPoint], indexActiveDataPoint);
+        else {
+            var indexActiveDataPoint = this.data.series.findIndex(function (d) {
+                var label = d.name;
+                return label && _this.visibleValue && label.toString() === _this.visibleValue.toString() && d.value !== undefined;
+            });
+            if (indexActiveDataPoint === -1) {
+                // No valid point is 'active/hovered over' at this moment.
+                return undefined;
+            }
+            return this.mapDataPointToCircle(this.data.series[indexActiveDataPoint], indexActiveDataPoint);
+        }
     };
     CircleSeriesComponent.prototype.mapDataPointToCircle = function (d, i) {
         var seriesName = this.data.name;
